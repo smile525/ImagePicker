@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 100
-        versionName "1.0.0"
+        versionName "${versionName}"
     }
 
     buildTypes {
@@ -44,11 +44,11 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 //建议和github地址对应，否则对jitpack无效
-                groupId = "com.github.smile525"
+                groupId = "${groupId}"
                 //建议和github仓库名称对应，否则对jitpack无效
-                artifactId = "IntegrationResources"
+                artifactId = "${artifactId}"
                 //建议和release的tag相同，否则对jitpack无效
-                version = "1.0.0"
+                version = "${versionName}"
             }
         }
     }
