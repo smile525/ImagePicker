@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 100
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            android.libraryVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "imagepicker_${versionName}_${variant.buildType.name}.aar"
+                }
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                //建议和github地址对应，否则对jitpack无效
+                groupId = "com.github.smile525"
+                //建议和github仓库名称对应，否则对jitpack无效
+                artifactId = "IntegrationResources"
+                //建议和release的tag相同，否则对jitpack无效
+                version = "1.0.0"
+            }
+        }
+    }
+}
